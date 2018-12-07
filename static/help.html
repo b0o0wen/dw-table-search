@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="static/lib/bootstrap.min.css" rel="stylesheet">
+    <script src="static/lib/jquery-3.2.1.min.js"></script>
+    <script src="static/lib/bootstrap.min.js"></script>
+    <script src="static/lib/marked.min.js"></script>
+    <style>
+        #header{
+            width: 100%;
+            height: 40px;
+            background: #2e6da4;
+            line-height: 40px;
+            color: white;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        #show{
+            font-size:16px;
+            line-height: 25px;
+        }
+    </style>
+</head>
+<body>
+<div id="header" class="text-center">帮助文档</div>
+<div class="container">
+<textarea id="md" class="form-control">
+## search
+搜索会综合所有信息 ( table_name, describe, demand, charge, col.name, col.describe 以及note ) 返回结果
+
+输入主要有引号内内容与引号外内容。可以分别单独使用，也可以同时使用
+- `''`引号（英文引号,单双不限）内的关键词为必须匹配项，反应结果与关键词是否匹配得上，多个关键词之间为交集关系(或、非感觉不实用，所以未上线)。
+- 不带引号的关键词反应：结果与关键词匹配得怎么样。
+
+
+__ 🌰 举些栗子8 🌰 __
+
+- `'cindy'` 返回所有与cindy有关的表
+- `'金依 anchor' date userid` 返回结果一定含有`金依`与`anchor`，含有`date userid`则排序靠前。不过表名中含有date的会排序更加靠前，因为策略中表名的权重更高，而我们现在并不能得知date这个词更应该是表名含有还是字段含有。
+- 引号内的词自然也参与排序权重，所以对于上条搜索，您不必：`'金依 anchor' 金依 anchor date userid`
+- `'01'` 返回所有与01有关的表（主要就是d_01_xxxx这些表）。
+- `01` 同样返回与01有关的表。但是注意仅有不加引号的关键词时，返回结果数被设为至多50条。所以上一条搜索是完整结果，此条只过滤出相关性排名前50的。
+- `''` 特殊处理：一对空引号，返回所有备注不完整的表（describe 或 demand 或 charge 为空）。
+- `'' sem cpa` 空引号后同样可以加关键词，来影响结果排序，更快捷地找到您想要修改注释的表。
+
+__NOTE！__
+
+`'report_anchor_acc'` 这条是搜不到结果的。
+当您知道并且想搜确切的表名时，各种方式都可以检索到这条，但请不要用`引号 + 带下划线的完整表名`，您可以：
+1. `report_anchor_acc` 包含下划线，但不要引号
+2. `'anchor acc'` 或 `anchor acc`
+3. ctrl + f
+
+搜索设计的初衷是：
+1. 使用者的已知信息是模糊的，比如
+    - 当使用者想知道自己想要的一张表是否存在时
+    - 当使用者忘记确切表名，或懒得记住确切表名
+
+    可以通过搜索业务关键词，及期望所含字段，负责人等等来定位到表（旁白：还有什么比问欣爷来得更方便快捷？）
+2. 更快捷地定位到所需的表，并相对ctrl+f更方便地展示与修改
+
+都是凭空臆想，甚至可能与实际需求南辕北辙，也依赖更规范的命名或词库，所以...
+
+#### 请不要忘记ctrl+f
+
+也欢迎提建议
+
+## basic
+- `editable` 更新后，一个表的注释统一由一个switch掌控。默认关闭，打开即可编辑describe demand charge及字段明细，再次关闭提交更改
+- `refresh` metadata house默认每天同步一次。在新建或修改表后，而列表中没有显示更改信息时，点击refresh以同步所做修改。修改表并refresh后，原有字段的注释不会消失。
+- `+—` 可展开或收起全部，但仅在列表行数少于50时可用
+</textarea>
+<div id ="show"></div>
+</div>
+</body>
+
+<script>
+    $('#show').html(marked($("#md").val()));
+    $("#md").hide()
+</script>
+
+</html>

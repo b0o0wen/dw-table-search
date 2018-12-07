@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>dw table metadata</title>
+
+	<script src="static/lib/jquery-3.2.1.min.js" type="text/javascript"></script>
+
+	<link href="static/lib/bootstrap.min.css" rel="stylesheet">
+    <script src="static/lib/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="static/css/default.css">
+    <link rel="stylesheet" href="static/lib/bootstrap-table-expandable.css">
+
+	<link rel="stylesheet" href="static/lib/checkboxes.css">
+
+	<link rel="stylesheet" href="static/lib/material-scrolltop.css">
+	<script type="text/javascript" src="static/lib/material-scrolltop.js"></script>
+
+	<link rel="stylesheet" href="static/lib/ladda-themeless.min.css">
+
+	<link rel="stylesheet" href="static/lib/jquery-preloader.min.css">
+	<script type="text/javascript" src="static/lib/jquery-preloader.min.js"></script>
+
+	<style type="text/css">td:hover { background: none !important;}</style>
+
+
+</head>
+<body>
+	<div id="preloader">
+	    <div id="preloader-inner"></div>
+	</div>
+	<div class="htmleaf-container">
+		<header class="htmleaf-header">
+			<h3>dw metadata house <a href="/help"><span class="badge" style="background:orange;">?</span></a>
+			<div style="float:right;" class="progress-demo">
+			<button class="btn btn-primary ladda-button" data-style="expand-right" onclick="keep_es_informed()">
+				<span class="ladda-label">refresh</span>
+			</button>
+			</div></h3>
+		</header>
+		<div class="container">
+
+			<!--搜索-->
+			<form class="form-horizontal" role="form" id="search_form" onsubmit="return false">
+			  <div class="form-group">
+				<div class="col-sm-10">
+				<div class="input-group input-group-lg">
+				  <input type="text" class="form-control" name="search_str" id="search_yeah"
+					   placeholder="请输入关键字" autocomplete="on">
+				  <span class="input-group-btn">
+					  <button type="submit" id="search-btn" class="btn btn-info btn-lg ladda-button" data-style="expand-right" data-size="l" onclick="search()"><span class="ladda-label">GO !</span></button>
+				  </span>
+				</div>
+				</div>
+			  </div>
+			</form>
+
+
+			<!--table主体-->
+			<table class="table table-hover table-expandable" id="mytable">
+                <thead>
+                    <tr>
+						<th>#</th>
+                        <th>table_name</th>
+                        <th>describe</th>
+                        <th>demand</th>
+                        <th>charge</th>
+						<th>editable</th>
+						<th id="expand-all">+-</th>
+                    </tr>
+                </thead>
+				<tbody></tbody>
+            </table>
+		</div>
+	</div>
+	<button class="material-scrolltop" type="button"></button>
+
+<script src="static/js/fill-up.js"></script>
+<script src="static/js/re-fill-up-func.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="static/lib/spin.min.js"></script>
+<script type="text/javascript" src="static/lib/ladda.min.js"></script>
+<script>
+	Ladda.bind( 'div:not(.progress-demo) button', { timeout: 625 } );
+</script>
+</body>
+<script>
+    $('body').materialScrollTop();
+    $(window).preloader();
+</script>
+</html>
