@@ -25,7 +25,7 @@ $.ajax({
             var outer_tr = `
 <tr>
     <td> ${parseInt(t)+1} </td>
-    <td>${data[t]['table_name']}</td>
+    <td class="table-expandable-arrow-td">${data[t]['table_name']}</td>
     <td class='editable'>${data[t]['describe']}</td>
     <td class='editable'>${data[t]['demand']}</td>
     <td class='editable'>${data[t]['charge']}</td>
@@ -166,7 +166,7 @@ function submit_to_es(str){
         data:{"json_str":str},
         type:'post',
         success: function (data) {
-            alert(data['msg'])
+            document.log(data['msg'])
         },
         error:function(){
             alert("Something wrong with update")
