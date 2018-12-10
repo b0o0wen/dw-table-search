@@ -35,7 +35,7 @@ def save_data_to_es():
         x=json.loads(json_str)
         table_name = x['table_name']
         es.index(index='dw_table',doc_type='awesome_table',id=table_name,body=json_str)
-    return json.dumps({"msg":"ok"})
+    return json.dumps({"msg":"submitted successfully ^_^"})
 
 # keep es informed 同步mysql与es
 @app.route('/keep_es_informed',methods=['GET'])

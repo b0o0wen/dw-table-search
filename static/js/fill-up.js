@@ -166,7 +166,9 @@ function submit_to_es(str){
         data:{"json_str":str},
         type:'post',
         success: function (data) {
-            document.log(data['msg'])
+            $('#alert button').text(data['msg'])
+            $('#alert').fadeIn();
+            $('#alert').fadeOut(1700);
         },
         error:function(){
             alert("Something wrong with update")
