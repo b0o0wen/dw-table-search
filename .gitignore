@@ -115,4 +115,4 @@ dmypy.json
 
 # my customized ignore file
 .idea/
-util/constant.py
+util/constant.*
