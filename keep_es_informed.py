@@ -126,7 +126,7 @@ def keep_es_informed():
             body = format_render(cols=new_cols, table_name=i, charge=info['_source'].get('charge',''),describe=info['_source'].get('describe',''), demand=info['_source'].get('demand',''),detail_describe=info['_source'].get('detail_describe',''))
             es.index(index='dw_table', doc_type='awesome_table', id=i, body=body)
 
-        # es多的column... 与mysql多时一起处理了
+        # es多的column... 已经与mysql多时一起处理了
 
     # mysql_only 的表，在es中加上
     mysql_only = from_mysql.keys() - from_es.keys()
@@ -136,7 +136,9 @@ def keep_es_informed():
 
     # es_only 的，删除。
     # 避免是因为mysql查数出问题而导致es的误删...
-    if len(from_mysql.keys()) > 500:
-        es_only = from_es.keys() - from_mysql.keys()
-        for i in es_only:
-            es.delete(index='dw_table', doc_type='awesome_table', id=i)
+    # if len(from_mysql.keys()) > 500:
+    #     es_only = from_es.keys() - from_mysql.keys()
+    #     for i in es_only:
+    #         es.delete(index='dw_table', doc_type='awesome_table', id=i)
+
+    # es_only 的，不删除！表删了而es里有的，也不删除，避免 '删表-refresh-重建表' 导致的已填数据丢失。即使是确实删表也没有必要删es里的数据。之后若新建表作他用，反正会把新字段搞上的。

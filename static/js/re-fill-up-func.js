@@ -23,7 +23,7 @@ $.ajax({
             var str = ``;
             var outer_tr = `
 <tr>
-    <td> ${parseInt(t)+1} </td>
+    <td class="table-expandable-arrow-td"> ${parseInt(t)+1} </td>
     <td class="table-expandable-arrow-td">${data[t]['table_name']}</td>
     <td class='editable'>${data[t]['describe']}</td>
     <td class='editable'>${data[t]['demand']}</td>
