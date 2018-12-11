@@ -112,3 +112,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# my customized ignore file
+.idea/
+util/constant.py
