@@ -112,7 +112,8 @@ def keep_es_informed():
 
         # mysql多的column
         x = from_mysql[i].keys() - from_es[i].keys()
-        if len(x) > 0:
+        y = from_es[i].keys() - from_mysql[i].keys()
+        if len(x) > 0 or len(y) > 0:
             mysql_col_only = {}
             for j in x:
                 # print(from_mysql[i][j])
@@ -127,6 +128,7 @@ def keep_es_informed():
             es.index(index='dw_table', doc_type='awesome_table', id=i, body=body)
 
         # es多的column... 已经与mysql多时一起处理了
+        # 一共四种情况：两边字段完全相同，es mysql各自有多的字段，仅mysql比es字段多，仅es比mysql字段多。最终是取共有字段+mysql多的字段，可以把后三种写在一起： len(x) > 0 or len(y) > 0 .以减少 info = es.get(index='dw_table', doc_type='awesome_table', id=i) 请求的次数
 
     # mysql_only 的表，在es中加上
     mysql_only = from_mysql.keys() - from_es.keys()
