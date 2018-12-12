@@ -1,4 +1,12 @@
 function search(){
+// ajax请求默认是页面局部刷新（不然怎么是ajax呢），所以无法在后端通过判断提交信息来重定向到 /help 所以在前端先判断。
+var search_input = $('#search_input').val()
+if (search_input =='#help'){
+    var f = document.getElementById('search_form');
+    f.action = '/help';
+    f.submit();
+}
+else {
 $.ajax({
     url: "/data",
     dataType: "json",
@@ -112,9 +120,10 @@ $.ajax({
 
     },
     error:function(){
-        alter("Something wrong with search")
+        alert("Something wrong with search")
     }
 });
+}
 }
 
 
