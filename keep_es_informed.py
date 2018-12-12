@@ -144,3 +144,6 @@ def keep_es_informed():
     #         es.delete(index='dw_table', doc_type='awesome_table', id=i)
 
     # es_only 的，不删除！表删了而es里有的，也不删除，避免 '删表-refresh-重建表' 导致的已填数据丢失。即使是确实删表也没有必要删es里的数据。之后若新建表作他用，反正会把新字段搞上的。
+
+if __name__ =='__main__':
+    keep_es_informed()
