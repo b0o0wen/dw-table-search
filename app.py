@@ -47,6 +47,15 @@ def keep_es_informed():
 def help():
     return send_file('./static/help.html')
 
+@app.route('/del',methods=['POST'])
+def del_es_table():
+    table_to_del=request.form['table_to_del']
+    if es.exists(index='dw_table',doc_type='awesome_table',id=table_to_del):
+        es.delete(index='dw_table',doc_type='awesome_table',id=table_to_del)
+        return json.dumps({"msg":"deleted successfully ^_^"})
+    else:
+        return json.dumps({"msg":"it's not in es at all 😑"})
+
 def load_all_es_data():
     query={
         "size":2000

@@ -1,10 +1,32 @@
 function search(){
 // ajax请求默认是页面局部刷新（不然怎么是ajax呢），所以无法在后端通过判断提交信息来重定向到 /help 所以在前端先判断。
-var search_input = $('#search_input').val()
+var search_input = $('#search_input').val().trim()
 if (search_input =='#help'){
     var f = document.getElementById('search_form');
     f.action = '/help';
     f.submit();
+}
+else if (search_input.split(/\s+/)[0] == '#del'){
+    if (search_input.split(/\s+/).length != 2){
+        alert('illegal #del request 😤')
+    }
+    else{
+        var table_to_del = search_input.split(/\s+/)[1];
+        $.ajax({
+            url:"/del",
+            dataType: "json",
+            data:{"table_to_del":table_to_del},
+            type:"post",
+            success:function(data){
+                $('#alert button').text(data['msg'])
+                $('#alert').fadeIn();
+                $('#alert').fadeOut(1700);
+            },
+            error:function(){
+                alert("Something wrong with del")
+            }
+        })
+    }
 }
 else {
 $.ajax({
