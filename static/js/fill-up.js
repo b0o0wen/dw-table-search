@@ -227,11 +227,11 @@ function checkboxOnclick(btn){
 
 // 方法是：复制前一个字符（单引号 或者 双引号），然后将光标移至引号内（前移一个字符）。
 // 要复制前一个字符，必须用keyup。因为输入过程是在keydown时，若用keydown，则 $('#search_yeah').val()还提取不到值
-$("#search_yeah").keyup(function(event){
+$("#search_input").keyup(function(event){
 　　if(event.keyCode == 222){
         var pos = getCursortPosition(event.target);
         var last_char = lastChar(pos)
-        $('#search_yeah').val($("#search_yeah").val()+last_char);
+        $('#search_input').val($("#search_input").val()+last_char);
         setCaretPosition(event.target, pos)
 　　}
 });
@@ -269,7 +269,7 @@ function setCaretPosition(ctrl, pos){
 
 
 function lastChar(pos){
-    var x=document.getElementById('search_yeah')
+    var x=document.getElementById('search_input')
     var selection = x.value.substring(pos-1,pos)
     return selection
 }
