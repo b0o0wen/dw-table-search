@@ -35,6 +35,11 @@ $.ajax({
             <label for="chbx-${t}"></label>
         </div>
     </td>
+    <td>
+        <div>
+        <a href='${data[t]['doc_url']}' target="_blank" onclick='return check_doc_url_if_exists(this)'>doc</a>,<a href='http://192.168.20.96/Sql?data=dw.${data[t]['table_name']}' target="_blank">explr</a>    
+        </div>
+    </td>
 </tr>
             `;
 
@@ -56,6 +61,10 @@ $.ajax({
                             <tr class="success">
                                 <td style="font-size:12px;font-weight:bold;font-style:italic;">note:</td>
                                 <td style="font-size:12px;" class="editable" colspan="3">${data[t]['detail_describe']}</td>
+                            </tr>
+                            <tr class="success">
+                                <td style="font-size:12px;font-weight:bold;font-style:italic;">doc_url:</td>
+                                <td style="font-size:12px;" class="editable" colspan="3">${data[t]['doc_url']}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -193,7 +202,7 @@ function checkboxOnclick(btn){
         var detail=[];
         var inner_head=['col_name','data_type','describe','example']
         m = x.nextElementSibling.getElementsByTagName('tbody')[0].children
-        for (i in range(0,m.length-1)){
+        for (i in range(0,m.length-2)){
         if (i>0){
             var n={};
             for(j in range(0,4)){
@@ -207,12 +216,13 @@ function checkboxOnclick(btn){
         }
         }
 
-        final_object['detail_describe']=m[m.length-1].children[1].textContent
+        final_object['detail_describe']=m[m.length-2].children[1].textContent
+        final_object['doc_url']=m[m.length-1].children[1].textContent
 
 //
         var outer_head=['','table_name','describe','demand','charge']
         s = x.children
-        for (i in range(0,s.length-2)){
+        for (i in range(0,s.length-3)){
         if (i>0){
             final_object[outer_head[i]] = s[i].textContent
         }
@@ -272,4 +282,14 @@ function lastChar(pos){
     var x=document.getElementById('search_input')
     var selection = x.value.substring(pos-1,pos)
     return selection
+}
+
+
+function check_doc_url_if_exists(btn) {
+    var x=btn.parentNode.parentNode.parentNode;
+    var m = x.nextElementSibling.getElementsByTagName('tbody')[0].children
+    if (m[m.length-1].children[1].textContent == "undefined") {
+        alert('doc_url does not exist');
+        return false
+    }
 }
